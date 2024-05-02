@@ -66,7 +66,7 @@ docker build -t gestor-de-datos .
 Para ejecutar el componente y correr el proceso de *extracción*, *transformación* y *carga* de datos, utiliza el comando:
 
 ```shell
-docker run --rm --name gestor-de-datos --link dgraph:dgraph gestor-de-datos
+docker run -d --rm --name gestor-de-datos --link dgraph:dgraph gestor-de-datos
 ```
 
 ## Versión
