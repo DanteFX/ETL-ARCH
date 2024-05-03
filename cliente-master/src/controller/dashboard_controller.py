@@ -171,8 +171,8 @@ class DashboardController:
         return result
 
     @staticmethod
-    def load_best_sellers():
-        response = Repository.get_best_sellers()
+    def load_best_sellers(start_date: datetime, end_date: datetime):
+        response = Repository.get_best_sellers(start_date=start_date, end_date=end_date)
         if response.status_code != 200:
             return []
         result = []
@@ -189,8 +189,8 @@ class DashboardController:
         return result
 
     @staticmethod
-    def load_worst_sales():
-        response = Repository.get_worst_sales()
+    def load_worst_sales(start_date: datetime, end_date: datetime):
+        response = Repository.get_worst_sales(start_date=start_date, end_date=end_date)
         if response.status_code != 200:
             return []
         result = []

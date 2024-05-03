@@ -187,3 +187,41 @@ class Queries:
                 }
             }
         """
+    
+    @staticmethod
+    def get_best_sellers_by_date(start_date: datetime, end_date: datetime):
+        return '''
+            {{
+                var(func: has(description)) {{
+                    c as count(bought)@filter(
+                        ge(date, "{start_d}") AND 
+                        le(date, "{end_d}")
+                    )
+                }}
+                    
+                response(func: has(description), orderdesc: val(c)){{
+                    description
+                    times: val(c)
+                    price
+                }}
+            }}
+        '''.format(start_d=start_date.isoformat(), end_d=end_date.isoformat())
+        
+    @staticmethod
+    def get_worst_sales_by_date(start_date: datetime, end_date: datetime):
+        return '''
+            {{
+                var(func: has(description)) {{
+                    c as count(bought)@filter(
+                        ge(date, "{start_d}") AND 
+                        le(date, "{end_d}")
+                    )
+                }}
+                    
+                response(func: has(description), orderasc: val(c)){{
+                    description
+                    times: val(c)
+                    price
+                }}
+            }}
+        '''.format(start_d=start_date.isoformat(), end_d=end_date.isoformat())

@@ -58,13 +58,13 @@ class Repository:
         return response
 
     @staticmethod
-    def get_best_sellers():
-        response = Provider.execute(Queries.get_best_sellers())
+    def get_best_sellers(start_date: datetime, end_date: datetime):
+        response = Provider.execute(Queries.get_best_sellers_by_date(start_date=start_date, end_date=end_date))
         return response
 
     @staticmethod
-    def get_worst_sales():
-        response = Provider.execute(Queries.get_worst_sales())
+    def get_worst_sales(start_date: datetime, end_date: datetime):
+        response = Provider.execute(Queries.get_worst_sales_by_date(start_date=start_date, end_date=end_date))
         return response
     
     @staticmethod

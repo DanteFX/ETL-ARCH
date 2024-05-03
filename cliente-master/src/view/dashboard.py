@@ -94,11 +94,11 @@ class Dashboard:
                         dbc.Row(
                             [
                                 dbc.Col(
-                                    self._panel_best_sellers(),
+                                    self._panel_best_sellers(start_date=start_date, end_date=end_date),
                                     width=6
                                 ),
                                 dbc.Col(
-                                    self._panel_worst_sales(),
+                                    self._panel_worst_sales(start_date=start_date, end_date=end_date),
                                     width=6
                                 ),
                             ]
@@ -233,8 +233,8 @@ class Dashboard:
             ]
         )
 
-    def _panel_best_sellers(self):
-        best_sellers = DashboardController.load_best_sellers()
+    def _panel_best_sellers(self, start_date:datetime, end_date:datetime):
+        best_sellers = DashboardController.load_best_sellers(start_date=start_date, end_date=end_date)
         return html.Div(
             [
                 dbc.Card(
@@ -265,8 +265,8 @@ class Dashboard:
             ]
         )
 
-    def _panel_worst_sales(self):
-        worst_sales = DashboardController.load_worst_sales()
+    def _panel_worst_sales(self, start_date:datetime, end_date:datetime):
+        worst_sales = DashboardController.load_worst_sales(start_date=start_date, end_date=end_date)
         return html.Div(
             [
                 dbc.Card(

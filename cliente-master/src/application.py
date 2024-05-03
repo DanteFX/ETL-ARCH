@@ -57,6 +57,8 @@ def update(n_clicks, start_date:datetime, end_date:datetime):
                 dashboard._highlights_cards(start_date=start_date, end_date=end_date), 
                 ## dashboard._bar_chart_providers_by_location(),
                 dashboard._bar_chart_sales_per_location(start_date=start_date, end_date=end_date),
+                dashboard._panel_best_sellers(start_date=start_date, end_date=end_date),
+                dashboard._panel_worst_sales(start_date=start_date, end_date=end_date),
                 html.Br(),
                 html.Br(),
                 html.H1("Reporte General"),
