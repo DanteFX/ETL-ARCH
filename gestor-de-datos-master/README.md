@@ -33,7 +33,7 @@ Componente responsable de ejecutar el proceso de *extracción*, *transformación
 Para ejecutar este componente es necesario contar con la ejecución de Dgraph, parea ello utilizamos el siguiente comando:
 
 ```shell
-docker run -it -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 --name dgraph dgraph/standalone:latest
+docker run -it -d -p 5080:5080 -p 6080:6080 -p 8080:8080 -p 9080:9080 --name dgraph dgraph/standalone:latest
 ```
 
 El comando anterior instanciará los componentes [Dgraph Zero](https://dgraph.io/docs/deploy/dgraph-zero/) (componente encargado de gestionar nodos Dgraph dentro de un cluster balanceando los datos almacenados en los nodos) y [Dgraph Alpha](https://dgraph.io/docs/deploy/dgraph-alpha/) (componente encargado de almacenar y gestionar los datos así como los indices y los predicados de consulta).
@@ -66,7 +66,7 @@ docker build -t gestor-de-datos .
 Para ejecutar el componente y correr el proceso de *extracción*, *transformación* y *carga* de datos, utiliza el comando:
 
 ```shell
-docker run --rm --name gestor-de-datos --link dgraph:dgraph gestor-de-datos
+docker run -d --rm --name gestor-de-datos --link dgraph:dgraph gestor-de-datos
 ```
 
 ## Versión
