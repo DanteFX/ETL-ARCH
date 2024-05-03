@@ -223,3 +223,5 @@ class DashboardController:
                 "times": product["times"]
             })
         return result
+    
+    

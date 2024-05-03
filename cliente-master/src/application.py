@@ -15,6 +15,8 @@ from src.view.dashboard import Dashboard
 import dash_bootstrap_components as dbc
 import dash
 from datetime import datetime
+from dash.dependencies import Input, Output, State
+from dash import html
 
 app = dash.Dash(
     external_stylesheets=[dbc.themes.LUX],
@@ -28,3 +30,42 @@ app.title = "ETL"
 dashboard = Dashboard()
 
 app.layout = dashboard.document(start_date=datetime(2010, 1, 1), end_date=datetime.now())
+
+@app.callback(
+    Output(component_id='output-container-date-picker-range', component_property='children'),
+    [Input(component_id='Update-button', component_property='n_clicks')],
+    [State(component_id='date-picker-range', component_property='start_date'),
+    State(component_id='date-picker-range', component_property='end_date')],
+    prevent_initial_call=True
+)
+
+def update(n_clicks, start_date:datetime, end_date:datetime):
+    if n_clicks > 0:
+        start_date = datetime.strptime(start_date, '%Y-%m-%d')
+        end_date = datetime.strptime(end_date, '%Y-%m-%d')
+        
+        
+        updated_content = dashboard._highlights_cards(start_date=start_date, end_date=end_date)
+            # Aquí agregamos los demás componentes que queremos actualizar
+        
+        
+        
+        return (
+                html.Br(),
+                html.H1("Reportes por fecha"),
+                html.Br(),
+                dashboard._highlights_cards(start_date=start_date, end_date=end_date), 
+                ## dashboard._bar_chart_providers_by_location(),
+                dashboard._bar_chart_sales_per_location(start_date=start_date, end_date=end_date),
+                html.Br(),
+                html.Br(),
+                html.H1("Reporte General"),
+                html.Br(),
+                html.Br(),
+                
+                
+
+                
+
+                )
+    
