@@ -11,6 +11,7 @@
 #   y formatear el contenido de un archivo XML
 #-------------------------------------------------------------------------
 from src.extractors.xml_extractor import XMLExtractor
+from datetime import datetime
 import xml.etree.ElementTree as ET
 from os.path import join
 import luigi, os, json
@@ -34,6 +35,7 @@ class XMLTransformer(luigi.Task):
                             "price": row.find('current_price').text,
                             "total": float(row.find('product_qty').text) * float(row.find('current_price').text),
                             "invoice": row.find('order_inv').text,
+                            "date": datetime.strptime(row.find('date_inv').text, "%d/%m/%Y %H:%M").strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                             "provider": row.find('provider_identifier').text,
                             "country": row.find('country_loc').text
                         }
