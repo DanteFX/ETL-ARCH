@@ -31,6 +31,7 @@ class Dashboard:
                 html.Div(html.Hr()),
                 self._header_subtitle("Sales summary financial report"),
                 html.Br(),
+                html.P("Indique la fecha para generar el reporte de los indicadores de ventas", style={"font-style": "italic", "margin-bottom": "10px"}),
                 dbc.Row(
                     [
                         dbc.Col(
