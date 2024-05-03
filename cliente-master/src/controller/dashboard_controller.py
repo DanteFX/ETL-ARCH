@@ -12,6 +12,7 @@
 #-------------------------------------------------------------------------
 from src.data.repository import Repository
 import json
+import datetime
 
 class DashboardController:
 
@@ -76,18 +77,22 @@ class DashboardController:
         }
 
     @staticmethod
-    def load_sales():
-        response = Repository.get_sales()
+    def load_sales(start_date:datetime, end_date:datetime):
+        response = Repository.get_sales(start_date=start_date, end_date=end_date)
         if response.status_code != 200:
             return {"sales": 0}
-        
+    
         json_response = json.loads(response.text)
-        
+    
         assert('data' in json_response.keys())
         assert('response' in json_response['data'].keys())
 
+        sales_value = json_response["data"]["response"][0]["total"]
+        if sales_value is None:
+            sales_value = 0
+    
         return {
-            "sales": json_response["data"]["response"][0]["total"]
+            "sales": sales_value
         }
 
     @staticmethod
@@ -114,8 +119,8 @@ class DashboardController:
         return result
 
     @staticmethod
-    def load_sales_per_location():
-        response = Repository.get_sales_by_location()
+    def load_sales_per_location(start_date: datetime, end_date: datetime):
+        response = Repository.get_sales_by_location(start_date=start_date, end_date=end_date)
         if response.status_code != 200:
             return {
                 "sales": [],

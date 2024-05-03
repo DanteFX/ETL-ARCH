@@ -14,6 +14,7 @@
 from src.view.dashboard import Dashboard
 import dash_bootstrap_components as dbc
 import dash
+from datetime import datetime
 
 app = dash.Dash(
     external_stylesheets=[dbc.themes.LUX],
@@ -26,4 +27,4 @@ app.title = "ETL"
 
 dashboard = Dashboard()
 
-app.layout = dashboard.document()
+app.layout = dashboard.document(start_date=datetime(2010, 1, 1), end_date=datetime.now())

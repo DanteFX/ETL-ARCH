@@ -15,13 +15,14 @@ from src.controller.dashboard_controller import DashboardController
 import dash_bootstrap_components as dbc
 import plotly.express as px
 from dash import dcc, html
+from datetime import datetime
 
 class Dashboard:
 
     def __init__(self):
         pass
 
-    def document(self):
+    def document(self, start_date:datetime, end_date:datetime):
         return dbc.Container(
             fluid = True,
             children = [
@@ -30,7 +31,24 @@ class Dashboard:
                 html.Div(html.Hr()),
                 self._header_subtitle("Sales summary financial report"),
                 html.Br(),
-                self._highlights_cards(),
+                dbc.Row(
+                    [
+                        dbc.Col(
+                        [
+                            dcc.DatePickerRange(
+                                id='date-picker-range',
+                                min_date_allowed = datetime(2010, 1, 1),
+                                max_date_allowed = datetime.now(),
+                            ),
+                            dbc.Button("Update", id="Update-button", color="primary", className="mr-1", n_clicks=0),
+                        ],
+                        width={"size": 7},
+                        ),
+                    ]
+                ),
+                html.Br(),
+                html.Div(id='output-container-date-picker-range', children=html.Div(id='updated-content')),
+                self._highlights_cards(start_date=start_date, end_date=end_date),
                 html.Br(),
                 html.Div(
                     [
@@ -50,7 +68,7 @@ class Dashboard:
                         dbc.Row(
                             [
                                 dbc.Col(
-                                    self._bar_chart_sales_per_location(),
+                                    self._bar_chart_sales_per_location(start_date=start_date, end_date=end_date),
                                     width=12
                                 ),
                             ]
@@ -134,12 +152,12 @@ class Dashboard:
             ]
         )
 
-    def _highlights_cards(self):
+    def _highlights_cards(self, start_date:datetime, end_date:datetime):
         products = DashboardController.load_products()
         orders = DashboardController.load_orders()
         providers = DashboardController.load_providers()
         locations = DashboardController.load_locations()
-        sales = DashboardController.load_sales()
+        sales = DashboardController.load_sales(start_date=start_date, end_date=end_date)
         return html.Div(
             [
                 dbc.Row(
@@ -181,8 +199,8 @@ class Dashboard:
             ]
         )
 
-    def _bar_chart_sales_per_location(self):
-        data = DashboardController.load_sales_per_location()
+    def _bar_chart_sales_per_location(self, start_date: datetime, end_date: datetime):
+        data = DashboardController.load_sales_per_location(start_date=start_date, end_date=end_date)
         bar_char_fig = px.bar(data, x="location", y="sales")
         return dbc.Card(
             [

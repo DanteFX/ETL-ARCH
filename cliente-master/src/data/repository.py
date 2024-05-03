@@ -13,6 +13,7 @@
 #-------------------------------------------------------------------------
 from src.data.provider import Provider
 from src.data.queries import Queries
+from datetime import datetime
 
 class Repository:
 
@@ -37,8 +38,8 @@ class Repository:
         return response
 
     @staticmethod
-    def get_sales():
-        response = Provider.execute(Queries.get_total_sales())
+    def get_sales(start_date: datetime, end_date: datetime):
+        response = Provider.execute(Queries.get_total_sales_by_date(start_date=start_date, end_date=end_date))
         return response
 
     @staticmethod
@@ -47,8 +48,8 @@ class Repository:
         return response
 
     @staticmethod
-    def get_sales_by_location():
-        response = Provider.execute(Queries.get_sales_per_location())
+    def get_sales_by_location(start_date: datetime, end_date: datetime):
+        response = Provider.execute(Queries.get_sales_per_location_by_date(start_date=start_date, end_date=end_date))
         return response
 
     @staticmethod
