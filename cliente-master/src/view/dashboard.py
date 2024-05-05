@@ -112,7 +112,7 @@ class Dashboard:
                         dbc.Row(
                             [
                                 dbc.Col(
-                                    self._panel_most_selled_products(),
+                                    self._panel_most_selled_products(start_date=start_date, end_date=end_date),
                                     width=12
                                 ),
                             ]
@@ -298,34 +298,39 @@ class Dashboard:
             ]
         )
 
-    def _panel_most_selled_products(self):
+    def _panel_most_selled_products(self, start_date:datetime, end_date:datetime):
         most_selled = DashboardController.load_most_selled_products()
+        
+        # Crear una tabla HTML para mostrar los productos más vendidos
+        table_content = html.Table(
+            # Cabecera de la tabla
+            [html.Tr([html.Th("Producto", style={'padding': '10px'}),
+                    html.Th("Piezas vendidas", style={'padding': '10px'}),
+                    html.Th("Período", style={'padding': '10px'})],
+                    style={'background-color': '#f2f2f2', 'color': 'black', 'margin-bottom': '10px'})] +
+            # Filas de la tabla
+            [html.Tr([
+                html.Td(product['product'], style={'padding': '10px'}),
+                html.Td(product['times'], style={'padding': '10px'}),
+                html.Td(f"{start_date.strftime('%Y-%m-%d')} - {end_date.strftime('%Y-%m-%d')}", style={'padding': '10px'})
+            ], style={'background-color': 'white', 'color': 'black', 'margin-bottom': '10px'}) for product in most_selled]
+        )
+
         return html.Div(
             [
                 dbc.Card(
                     [
                         dbc.CardBody(
                             [
-                                html.H3("Most selled", className="card-title"),
+                                html.H1("Productos más vendidos", className="card-title"),
                                 html.Br(),
-                                html.Div(
-                                    [
-                                        html.Div(
-                                            [
-                                                dbc.Row(
-                                                    [
-                                                        html.H5(f"- {product['product']} [{product['times']} time(s) sold]", style={"font-weight":"bold"}),
-                                                    ]
-                                                ),
-                                            ]
-                                        )
-
-                                        for product in most_selled
-                                    ]
-                                )
+                                html.H4("Reporte de productos más vendidos", className="card-title"),
+                                # Mostrar la tabla de productos más vendidos
+                                table_content
                             ]
                         )
                     ]
                 )
-            ]
+            ],
+            style={'padding': '20px'}
         )
