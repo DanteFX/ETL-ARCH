@@ -224,7 +224,6 @@ class Queries:
                     price
                 }}
             }}
-<<<<<<< HEAD
         '''.format(start_d=start_date.isoformat(), end_d=end_date.isoformat())
     @staticmethod
     def get_total_sales_by_date(start_date: datetime, end_date: datetime):
@@ -238,6 +237,4 @@ class Queries:
                     total: sum(val(t))
                 }}
             }}
-=======
->>>>>>> ee4f2b59050e746c5d0849def0088976e1e437bd
         '''.format(start_d=start_date.isoformat(), end_d=end_date.isoformat())

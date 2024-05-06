@@ -44,7 +44,6 @@ def update(n_clicks, start_date:datetime, end_date:datetime):
         start_date = datetime.strptime(start_date, '%Y-%m-%d')
         end_date = datetime.strptime(end_date, '%Y-%m-%d')
         
-<<<<<<< HEAD
         # Validación para verificar si el período seleccionado excede los 40 días
         delta = end_date - start_date
         if delta.days > 40:
@@ -56,33 +55,4 @@ def update(n_clicks, start_date:datetime, end_date:datetime):
         # Aquí agregamos los demás componentes que queremos actualizar
         
         return updated_content
-=======
-        
-        updated_content = dashboard._highlights_cards(start_date=start_date, end_date=end_date)
-            # Aquí agregamos los demás componentes que queremos actualizar
-        
-        
-        
-        return (
-                html.Br(),
-                html.H1("Indicadores de ventas de todas las sucursales"),
-                html.Br(),
-                dashboard._highlights_cards(start_date=start_date, end_date=end_date), 
-                ## dashboard._bar_chart_providers_by_location(),
-                dashboard._bar_chart_sales_per_location(start_date=start_date, end_date=end_date),
-                dashboard._panel_best_sellers(start_date=start_date, end_date=end_date),
-                dashboard._panel_worst_sales(start_date=start_date, end_date=end_date),
-                html.Br(),
-                html.Br(),
-                ## esto ultimo de ser necesario eliminar si se llega a ver mal con lo que implementen por favor.
-                html.H1("Reporte General"),
-                html.Br(),
-                html.Br(),
-                
-                
-
-                
-
-                )
->>>>>>> ee4f2b59050e746c5d0849def0088976e1e437bd
     

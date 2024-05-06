@@ -224,7 +224,6 @@ class DashboardController:
             })
         return result
     
-<<<<<<< HEAD
     @staticmethod
     def load_sales(start_date: datetime, end_date: datetime):
         response = Repository.get_sales(start_date=start_date, end_date=end_date)
@@ -243,6 +242,3 @@ class DashboardController:
         return {
             "sales": sales_value
         }
-=======
-    
->>>>>>> ee4f2b59050e746c5d0849def0088976e1e437bd
