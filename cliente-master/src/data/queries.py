@@ -11,6 +11,8 @@
 #   y realizar el llenado de datos del tablero
 #
 #-------------------------------------------------------------------------
+from datetime import datetime
+
 class Queries:
 
     @staticmethod
@@ -95,6 +97,22 @@ class Queries:
                 }
             }
         """
+    
+    @staticmethod
+    def get_sales_per_location_by_date(start_date: datetime, end_date: datetime):
+        return '''
+            {{
+                    response(func: has(name)){{
+                    name
+                    providers: ~belongs {{
+                        sold: ~sold {{
+                            price
+                            quantity: count(bought) @filter( ge(date, "{start_d}") AND le(date, "{end_d}"))
+                        }}
+                    }}
+                }}
+            }}
+    '''.format(start_d=start_date.isoformat(), end_d=end_date.isoformat())
 
     @staticmethod
     def get_orders_per_location():
@@ -140,6 +158,20 @@ class Queries:
                 }
             }
         """
+    
+    @staticmethod
+    def get_total_sales_by_date(start_date: datetime, end_date: datetime):
+        return '''
+            {{
+                var(func: has(invoice)) @filter( ge(date, "{start_d}") AND le(date, "{end_d}")){{
+                    t as total 
+                }}
+
+                response() {{
+                    total: sum(val(t))
+                }}
+            }}
+        '''.format(start_d=start_date.isoformat(), end_d=end_date.isoformat())
 
     @staticmethod
     def get_most_selled_products():
@@ -155,3 +187,54 @@ class Queries:
                 }
             }
         """
+    
+    @staticmethod
+    def get_best_sellers_by_date(start_date: datetime, end_date: datetime):
+        return '''
+            {{
+                var(func: has(description)) {{
+                    c as count(bought)@filter(
+                        ge(date, "{start_d}") AND 
+                        le(date, "{end_d}")
+                    )
+                }}
+                    
+                response(func: has(description), orderdesc: val(c)){{
+                    description
+                    times: val(c)
+                    price
+                }}
+            }}
+        '''.format(start_d=start_date.isoformat(), end_d=end_date.isoformat())
+        
+    @staticmethod
+    def get_worst_sales_by_date(start_date: datetime, end_date: datetime):
+        return '''
+            {{
+                var(func: has(description)) {{
+                    c as count(bought)@filter(
+                        ge(date, "{start_d}") AND 
+                        le(date, "{end_d}")
+                    )
+                }}
+                    
+                response(func: has(description), orderasc: val(c)){{
+                    description
+                    times: val(c)
+                    price
+                }}
+            }}
+        '''.format(start_d=start_date.isoformat(), end_d=end_date.isoformat())
+    @staticmethod
+    def get_total_sales_by_date(start_date: datetime, end_date: datetime):
+        return '''
+            {{
+                var(func: has(invoice)) @filter(ge(date, "{start_d}") AND le(date, "{end_d}")) {{
+                    t as total 
+                }}
+
+                response() {{
+                    total: sum(val(t))
+                }}
+            }}
+        '''.format(start_d=start_date.isoformat(), end_d=end_date.isoformat())

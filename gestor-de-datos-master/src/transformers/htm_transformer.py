@@ -12,6 +12,7 @@
 #-------------------------------------------------------------------------
 from src.extractors.htm_extractor import HTMExtractor
 from bs4 import BeautifulSoup
+from datetime import datetime
 from os.path import join
 import luigi, os, json
 
@@ -36,6 +37,7 @@ class HTMTransformer(luigi.Task):
                             "price": entry["product_price"],
                             "total": float(entry["Qty"]) * float(entry["product_price"]),
                             "invoice": entry["order_invoice"],
+                            "date": datetime.strptime(entry["date_invoice"], "%d/%m/%Y %H:%M").strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                             "provider": entry["id_provider"],
                             "country": entry["country_location"]
                         }
