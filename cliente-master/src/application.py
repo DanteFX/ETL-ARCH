@@ -54,5 +54,20 @@ def update(n_clicks, start_date:datetime, end_date:datetime):
         
         # Aquí agregamos los demás componentes que queremos actualizar
         
-        return updated_content
+        return (
+                html.Br(),
+                html.H1("Indicadores de ventas de todas las sucursales"),
+                html.Br(),
+                dashboard._highlights_cards(start_date=start_date, end_date=end_date), 
+                ## dashboard._bar_chart_providers_by_location(),
+                dashboard._bar_chart_sales_per_location(start_date=start_date, end_date=end_date),
+                dashboard._panel_best_sellers(start_date=start_date, end_date=end_date),
+                dashboard._panel_worst_sales(start_date=start_date, end_date=end_date),
+                html.Br(),
+                html.Br(),
+                ## esto ultimo de ser necesario eliminar si se llega a ver mal con lo que implementen por favor.
+                html.H1("Reporte General"),
+                html.Br(),
+                html.Br(),
+                )
     
