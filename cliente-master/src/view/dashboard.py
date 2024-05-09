@@ -200,17 +200,19 @@ class Dashboard:
             ]
         )
 
+    # Definimos la función _bar_chart_sales_per_location para cargar datos de ventas por ubicación utilizando un método de dashboard_controller
     def _bar_chart_sales_per_location(self, start_date: datetime, end_date: datetime):
         data = DashboardController.load_sales_per_location(start_date=start_date, end_date=end_date)
+        # Crear el gráfico de barras utilizando Plotly Express
         bar_char_fig = px.bar(data, x="location", y="sales")
         return dbc.Card(
             [
                 dbc.CardBody(
                     [
                         html.H3("Sales per location", className="card-title"),
-                        dcc.Graph(
-                            id='sales-per-location',
-                            figure=bar_char_fig
+                        dcc.Graph( # Componente de gráfico interactivo de Dash
+                            id='sales-per-location', # ID del gráfico
+                            figure=bar_char_fig # Figura del gráfico de barras
                         ),
                     ]
                 ),
@@ -234,6 +236,7 @@ class Dashboard:
             ]
         )
 
+     # Definimos la función _panel_best_sellers para cargar los mejores vendedores utilizando un método de dashboard_controller
     def _panel_best_sellers(self, start_date:datetime, end_date:datetime):
         best_sellers = DashboardController.load_best_sellers(start_date=start_date, end_date=end_date)
         return html.Div(
@@ -265,7 +268,8 @@ class Dashboard:
                 )
             ]
         )
-
+    
+    # Definimos la función _panel_worst_sales para cargar las peores ventas usando el metodo de dashboard_controller
     def _panel_worst_sales(self, start_date:datetime, end_date:datetime):
         worst_sales = DashboardController.load_worst_sales(start_date=start_date, end_date=end_date)
         return html.Div(
@@ -278,7 +282,7 @@ class Dashboard:
                                 html.Br(),
                                 html.Div(
                                     [
-                                        html.Div(
+                                        html.Div( # Div para cada venta
                                             [
                                                 dbc.Row(
                                                     [
@@ -288,7 +292,7 @@ class Dashboard:
                                             ]
                                         )
 
-                                        for sale in worst_sales
+                                        for sale in worst_sales # Iteramos sobre las peores ventas
                                     ]
                                 )
                             ]

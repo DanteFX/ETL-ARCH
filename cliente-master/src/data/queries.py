@@ -97,7 +97,7 @@ class Queries:
                 }
             }
         """
-    
+    #Consulta GraphQL en formato python para consultar las ventas por ubicacion segun la fecha que se determine
     @staticmethod
     def get_sales_per_location_by_date(start_date: datetime, end_date: datetime):
         return '''
@@ -187,7 +187,7 @@ class Queries:
                 }
             }
         """
-    
+     #Consulta GraphQL en formato python para consultar las mejores ventas segun la fecha determinada
     @staticmethod
     def get_best_sellers_by_date(start_date: datetime, end_date: datetime):
         return '''
@@ -206,7 +206,8 @@ class Queries:
                 }}
             }}
         '''.format(start_d=start_date.isoformat(), end_d=end_date.isoformat())
-        
+    
+     #Consulta GraphQL en formato python para consultar las peores ventas segun la fecha determinada
     @staticmethod
     def get_worst_sales_by_date(start_date: datetime, end_date: datetime):
         return '''

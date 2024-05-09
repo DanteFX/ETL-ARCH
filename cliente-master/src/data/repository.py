@@ -49,6 +49,7 @@ class Repository:
 
     @staticmethod
     def get_sales_by_location(start_date: datetime, end_date: datetime):
+        # Llama a un proveedor de datos para ejecutar una consulta
         response = Provider.execute(Queries.get_sales_per_location_by_date(start_date=start_date, end_date=end_date))
         return response
 
@@ -59,11 +60,13 @@ class Repository:
 
     @staticmethod
     def get_best_sellers(start_date: datetime, end_date: datetime):
+         # Llama a un proveedor de datos para ejecutar una consulta
         response = Provider.execute(Queries.get_best_sellers_by_date(start_date=start_date, end_date=end_date))
         return response
 
     @staticmethod
     def get_worst_sales(start_date: datetime, end_date: datetime):
+         # Llama a un proveedor de datos para ejecutar una consulta
         response = Provider.execute(Queries.get_worst_sales_by_date(start_date=start_date, end_date=end_date))
         return response
     

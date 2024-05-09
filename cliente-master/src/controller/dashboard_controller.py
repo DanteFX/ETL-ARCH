@@ -120,21 +120,26 @@ class DashboardController:
 
     @staticmethod
     def load_sales_per_location(start_date: datetime, end_date: datetime):
+         # Realiza una llamada a la API para obtener las ventas por ubicación
         response = Repository.get_sales_by_location(start_date=start_date, end_date=end_date)
+        # Verifica si la llamada fue exitosa
         if response.status_code != 200:
             return {
                 "sales": [],
                 "location": []
             }
+        # Inicializa un diccionario para almacenar los resultados
         result = {
             "sales": [],
             "location": []
         }
         json_response = json.loads(response.text)
 
+        # Verifica la estructura esperada en la respuesta JSON
         assert('data' in json_response.keys())
         assert('response' in json_response['data'].keys())
 
+        # Calcula el total de ventas para esta ubicación sumando las ventas de cada proveedor
         for entry in json_response["data"]["response"]:
             result["location"].append(entry["name"])
             total = 0
@@ -172,12 +177,18 @@ class DashboardController:
 
     @staticmethod
     def load_best_sellers(start_date: datetime, end_date: datetime):
+        # Realiza una llamada a la API para obtener los productos más vendidos
         response = Repository.get_best_sellers(start_date=start_date, end_date=end_date)
+
+        # Verifica si la llamada fue exitosa
         if response.status_code != 200:
             return []
         result = []
+
+        # Procesa la respuesta JSON obtenida de la API
         json_response = json.loads(response.text)
 
+        # Verifica la estructura esperada en la respuesta JSON
         assert('data' in json_response.keys())
         assert('response' in json_response['data'].keys())
 
@@ -190,12 +201,18 @@ class DashboardController:
 
     @staticmethod
     def load_worst_sales(start_date: datetime, end_date: datetime):
+        # Realiza una llamada a la API para obtener los productos menos vendidos
         response = Repository.get_worst_sales(start_date=start_date, end_date=end_date)
+
+        # Verifica si la llamada fue exitosa
         if response.status_code != 200:
             return []
         result = []
+
+        # Procesa la respuesta JSON obtenida de la API
         json_response = json.loads(response.text)
 
+        # Verifica la estructura esperada en la respuesta JSON
         assert('data' in json_response.keys())
         assert('response' in json_response['data'].keys())
 
